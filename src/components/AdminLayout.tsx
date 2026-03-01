@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Shield, BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard } from "lucide-react";
+import { Shield, BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const adminLinks = [
@@ -12,6 +12,7 @@ const adminLinks = [
   { label: "Certificates", path: "/admin/certificates", icon: Award },
   { label: "Blogs", path: "/admin/blogs", icon: FileText },
   { label: "Applications", path: "/admin/applications", icon: Mail },
+  { label: "Achievements", path: "/admin/achievements", icon: Trophy },
   { label: "Settings", path: "/admin/settings", icon: Settings },
 ];
 
@@ -46,7 +47,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           <Link to="/" className="flex items-center gap-2">
             <Shield className="h-7 w-7 text-primary" />
             <span className="font-heading font-bold text-lg text-foreground">
-              Hack<span className="text-primary">academic</span>
+              HACK<span className="text-primary">ACADEMIC</span>
             </span>
           </Link>
           <p className="text-xs text-muted-foreground mt-1">Admin Panel</p>

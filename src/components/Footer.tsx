@@ -10,7 +10,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <Shield className="h-8 w-8 text-primary" />
               <span className="text-xl font-heading font-bold">
-                Hack<span className="text-primary">academic</span>
+                HACK<span className="text-primary">ACADEMIC</span>
               </span>
             </div>
             <p className="text-sm text-primary-foreground/70 leading-relaxed">
@@ -44,11 +44,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
-                info@hackademic.in
+                support@hackademic.in
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                +91 XXXXX XXXXX
+                +91 7668116055
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-primary mt-0.5" />
@@ -59,7 +59,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-sm text-primary-foreground/50">
-          © {new Date().getFullYear()} Hackademic. All rights reserved.
+          © {new Date().getFullYear()} HACKADEMIC. All rights reserved.
         </div>
       </div>
     </footer>

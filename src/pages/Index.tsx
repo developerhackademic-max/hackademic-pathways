@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionTitle } from "@/components/Section";
 import { PublicLayout } from "@/components/PublicLayout";
-import { Shield, BookOpen, Briefcase, Award, ArrowRight, CheckCircle, Users, Globe } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import { AIChatbot } from "@/components/AIChatbot";
+import { AchievementsSection } from "@/components/AchievementsSection";
+import { Shield, BookOpen, Briefcase, Award, ArrowRight, CheckCircle, Users, Globe, Eye } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useRef } from "react";
+
+import courseCyber from "@/assets/course-cyber-security.jpg";
+import courseVapt from "@/assets/course-vapt.jpg";
+import courseCcna from "@/assets/course-ccna.jpg";
+import courseThreat from "@/assets/course-threat-intel.jpg";
+import courseGraphic from "@/assets/course-graphic-design.jpg";
+import coursePython from "@/assets/course-python.jpg";
+import courseRhcsa from "@/assets/course-rhcsa.jpg";
 
 const stats = [
   { icon: Users, value: "500+", label: "Students Trained" },
@@ -24,7 +34,30 @@ const features = [
   "24/7 Learning Support",
 ];
 
+const courseImages: Record<string, string> = {
+  "cyber-security": courseCyber,
+  vapt: courseVapt,
+  "ccna-network-security": courseCcna,
+  "threat-intelligence": courseThreat,
+  "graphic-designing": courseGraphic,
+  python: coursePython,
+  rhcsa: courseRhcsa,
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0, scale: 1,
+    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
+
 const Index = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   const { data: courses } = useQuery({
     queryKey: ["courses"],
     queryFn: async () => {
@@ -41,31 +74,29 @@ const Index = () => {
     },
   });
 
-  const courseIcons: Record<string, string> = {
-    "cyber-security": "🛡️",
-    vapt: "🔍",
-    "ccna-network-security": "🌐",
-    "threat-intelligence": "🎯",
-    "graphic-designing": "🎨",
-    python: "🐍",
-    rhcsa: "🐧",
-  };
-
   return (
     <PublicLayout>
-      {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/50" />
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Hero with Video Background */}
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
+        <motion.div style={{ y: heroY }} className="absolute inset-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/60" />
+        </motion.div>
+
+        <motion.div style={{ opacity: heroOpacity }} className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
             >
               <span className="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 rounded-full px-4 py-1.5 text-sm text-primary mb-6">
                 <Shield className="h-4 w-4" />
@@ -73,9 +104,9 @@ const Index = () => {
               </span>
             </motion.div>
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.7 }}
               className="text-4xl md:text-6xl font-heading font-bold leading-tight mb-6"
               style={{ color: "white" }}
             >
@@ -83,18 +114,18 @@ const Index = () => {
               <span className="text-primary">Career</span> in Cyber Security
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
               className="text-lg mb-8"
               style={{ color: "rgba(255,255,255,0.7)" }}
             >
-              Master the skills employers demand. Join Hackademic and become a certified cybersecurity professional with hands-on training and industry-recognized certifications.
+              Master the skills employers demand. Join HACKADEMIC and become a certified cybersecurity professional with hands-on training and industry-recognized certifications.
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
               className="flex flex-wrap gap-4"
             >
               <Link to="/courses">
@@ -109,6 +140,19 @@ const Index = () => {
               </Link>
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Floating particles effect */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-primary/30"
+              style={{ left: `${15 + i * 15}%`, top: `${20 + (i % 3) * 25}%` }}
+              animate={{ y: [-20, 20, -20], opacity: [0.3, 0.7, 0.3] }}
+              transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
+            />
+          ))}
         </div>
       </section>
 
@@ -119,14 +163,23 @@ const Index = () => {
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card rounded-xl p-6 shadow-lg border border-border text-center card-float"
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -10px hsl(199 89% 48% / 0.2)" }}
+                className="bg-card rounded-xl p-6 shadow-lg border border-border text-center"
               >
                 <stat.icon className="h-8 w-8 text-primary mx-auto mb-3" />
-                <div className="text-2xl font-heading font-bold text-foreground">{stat.value}</div>
+                <motion.div
+                  className="text-2xl font-heading font-bold text-foreground"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 + 0.3, type: "spring", stiffness: 200 }}
+                >
+                  {stat.value}
+                </motion.div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
               </motion.div>
             ))}
@@ -134,7 +187,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Courses Preview */}
+      {/* Courses Preview with Images */}
       <Section>
         <SectionTitle
           subtitle="Our Courses"
@@ -145,25 +198,38 @@ const Index = () => {
           {(courses || []).slice(0, 8).map((course, i) => (
             <motion.div
               key={course.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              variants={cardVariants}
             >
-              <Link to={`/courses/${course.slug}`} className="block group">
-                <div className="bg-card rounded-xl p-6 border border-border card-float h-full">
-                  <div className="text-4xl mb-4">{courseIcons[course.slug] || "📚"}</div>
+              <div className="group bg-card rounded-2xl border border-border overflow-hidden h-full flex flex-col transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+                <div className="relative h-40 overflow-hidden">
+                  <img
+                    src={courseImages[course.slug] || courseCyber}
+                    alt={course.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent" />
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
                   <h3 className="font-heading font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
                     {course.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
+                  <p className="text-sm text-muted-foreground line-clamp-2 flex-1">
                     {course.short_description}
                   </p>
                   {course.duration && (
                     <p className="text-xs text-primary mt-3 font-medium">{course.duration}</p>
                   )}
+                  <Link to={`/courses/${course.slug}`} className="mt-3">
+                    <Button size="sm" variant="outline" className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                      <Eye className="h-3 w-3" /> View Course
+                    </Button>
+                  </Link>
                 </div>
-              </Link>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -187,15 +253,22 @@ const Index = () => {
           {(services || []).slice(0, 6).map((service, i) => (
             <motion.div
               key={service.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card rounded-xl p-8 border border-border card-float"
+              variants={cardVariants}
+              whileHover={{ y: -8, rotateY: 2, rotateX: -2 }}
+              className="bg-card rounded-2xl p-8 border border-border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30"
+              style={{ transformStyle: "preserve-3d" }}
             >
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <Briefcase className="h-6 w-6 text-primary" />
-              </div>
+              <motion.div
+                className="w-14 h-14 bg-gradient-to-br from-primary/20 to-cyber-green/20 rounded-xl flex items-center justify-center mb-5"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
+                <Briefcase className="h-7 w-7 text-primary" />
+              </motion.div>
               <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
                 {service.title}
               </h3>
@@ -207,13 +280,21 @@ const Index = () => {
         </div>
       </Section>
 
+      {/* Achievements */}
+      <AchievementsSection />
+
       {/* Why Hackademic */}
       <Section>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
             <SectionTitle
               subtitle="Why Choose Us"
-              title="Why Hackademic?"
+              title="Why HACKADEMIC?"
               description=""
               center={false}
             />
@@ -221,11 +302,18 @@ const Index = () => {
               We combine cutting-edge curriculum with real-world experience to produce industry-ready cybersecurity professionals. Our comprehensive approach ensures you're not just learning — you're becoming.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {features.map((f) => (
-                <div key={f} className="flex items-center gap-2">
+              {features.map((f, i) => (
+                <motion.div
+                  key={f}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-2"
+                >
                   <CheckCircle className="h-5 w-5 text-cyber-green flex-shrink-0" />
                   <span className="text-sm text-foreground">{f}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
             <Link to="/about" className="inline-block mt-8">
@@ -233,28 +321,49 @@ const Index = () => {
                 Learn More <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-          </div>
-          <div className="relative">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative"
+          >
             <div className="bg-gradient-to-br from-primary/20 to-cyber-green/20 rounded-2xl p-8 border border-primary/20">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-card rounded-xl p-6 text-center shadow-md">
-                  <Award className="h-10 w-10 text-primary mx-auto mb-2" />
-                  <p className="font-heading font-bold text-2xl text-foreground">95%</p>
-                  <p className="text-xs text-muted-foreground">Placement Rate</p>
-                </div>
-                <div className="bg-card rounded-xl p-6 text-center shadow-md">
-                  <Shield className="h-10 w-10 text-primary mx-auto mb-2" />
-                  <p className="font-heading font-bold text-2xl text-foreground">100+</p>
-                  <p className="text-xs text-muted-foreground">Security Audits</p>
-                </div>
-                <div className="bg-card rounded-xl p-6 text-center shadow-md col-span-2">
+                {[
+                  { icon: Award, val: "95%", lbl: "Placement Rate" },
+                  { icon: Shield, val: "100+", lbl: "Security Audits" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.lbl}
+                    className="bg-card rounded-xl p-6 text-center shadow-md"
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.15 }}
+                  >
+                    <item.icon className="h-10 w-10 text-primary mx-auto mb-2" />
+                    <p className="font-heading font-bold text-2xl text-foreground">{item.val}</p>
+                    <p className="text-xs text-muted-foreground">{item.lbl}</p>
+                  </motion.div>
+                ))}
+                <motion.div
+                  className="bg-card rounded-xl p-6 text-center shadow-md col-span-2"
+                  whileHover={{ scale: 1.02 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
                   <BookOpen className="h-10 w-10 text-primary mx-auto mb-2" />
                   <p className="font-heading font-bold text-2xl text-foreground">Hands-On Labs</p>
                   <p className="text-xs text-muted-foreground">Real-world cyber range environments</p>
-                </div>
+                </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Section>
 
@@ -270,7 +379,7 @@ const Index = () => {
               Ready to Start Your Cybersecurity Journey?
             </h2>
             <p className="text-lg mb-8 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.7)" }}>
-              Join hundreds of professionals who have transformed their careers with Hackademic.
+              Join hundreds of professionals who have transformed their careers with HACKADEMIC.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/courses">
@@ -287,6 +396,9 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* AI Chatbot */}
+      <AIChatbot />
     </PublicLayout>
   );
 };

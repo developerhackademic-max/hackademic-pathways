@@ -31,7 +31,7 @@ export default function ContactPage() {
       const waMessage = encodeURIComponent(
         `Hi, I'm ${form.name}. ${form.subject ? `Subject: ${form.subject}. ` : ""}${form.message}`
       );
-      window.open(`https://wa.me/91XXXXXXXXXX?text=${waMessage}`, "_blank");
+      window.open(`https://wa.me/917668116055?text=${waMessage}`, "_blank");
       setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     }
   };
@@ -60,7 +60,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-heading font-semibold text-foreground">Email</h4>
-                  <p className="text-muted-foreground">info@hackademic.in</p>
+                  <p className="text-muted-foreground">support@hackademic.in</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 bg-card rounded-xl p-6 border border-border card-float">
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-heading font-semibold text-foreground">Phone</h4>
-                  <p className="text-muted-foreground">+91 XXXXX XXXXX</p>
+                  <p className="text-muted-foreground">+91 7668116055</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 bg-card rounded-xl p-6 border border-border card-float">
