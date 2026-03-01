@@ -23,6 +23,8 @@ import AdminBlogsPage from "./pages/admin/AdminBlogsPage";
 import AdminApplicationsPage from "./pages/admin/AdminApplicationsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 import AdminAchievementsPage from "./pages/admin/AdminAchievementsPage";
+import TermsPage from "./pages/TermsPage";
+import PrivacyPage from "./pages/PrivacyPage";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,8 @@ const App = () => (
           <Route path="/admin/applications" element={<AdminApplicationsPage />} />
           <Route path="/admin/settings" element={<AdminSettingsPage />} />
           <Route path="/admin/achievements" element={<AdminAchievementsPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

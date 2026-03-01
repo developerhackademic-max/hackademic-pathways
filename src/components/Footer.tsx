@@ -29,13 +29,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold mb-4 text-primary">Courses</h4>
+            <h4 className="font-heading font-semibold mb-4 text-primary">Legal</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/70">
-              <li>Cyber Security</li>
-              <li>VAPT</li>
-              <li>CCNA / Network Security</li>
-              <li>Threat Intelligence</li>
-              <li>Python Programming</li>
+              <li><Link to="/terms" className="hover:text-primary transition-colors">Terms and Conditions</Link></li>
+              <li><Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
 
@@ -58,8 +55,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-sm text-primary-foreground/50">
-          © {new Date().getFullYear()} HACKADEMIC. All rights reserved.
+        <div className="mt-12 pt-6 border-t border-primary-foreground/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/50">
+          <p>© {new Date().getFullYear()} HACKADEMIC. All rights reserved.</p>
+          <div className="flex gap-4">
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms</Link>
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
+          </div>
         </div>
       </div>
     </footer>

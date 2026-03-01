@@ -144,15 +144,31 @@ const Index = () => {
 
         {/* Floating particles effect */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 rounded-full bg-primary/30"
-              style={{ left: `${15 + i * 15}%`, top: `${20 + (i % 3) * 25}%` }}
-              animate={{ y: [-20, 20, -20], opacity: [0.3, 0.7, 0.3] }}
-              transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
+              className={`absolute rounded-full ${i % 3 === 0 ? 'w-3 h-3 bg-primary/20' : i % 3 === 1 ? 'w-2 h-2 bg-cyber-green/25' : 'w-1.5 h-1.5 bg-primary/30'}`}
+              style={{ left: `${8 + i * 8}%`, top: `${15 + (i % 5) * 18}%` }}
+              animate={{
+                y: [-30, 30, -30],
+                x: [-(i % 3) * 10, (i % 3) * 10, -(i % 3) * 10],
+                opacity: [0.2, 0.7, 0.2],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{ repeat: Infinity, duration: 3 + i * 0.4, ease: "easeInOut" }}
             />
           ))}
+          {/* Animated connecting lines */}
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-32 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+            animate={{ opacity: [0, 0.5, 0], x: [0, 100, 0] }}
+            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-2/3 right-1/4 w-24 h-px bg-gradient-to-r from-transparent via-cyber-green/20 to-transparent"
+            animate={{ opacity: [0, 0.4, 0], x: [0, -80, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          />
         </div>
       </section>
 
@@ -243,13 +259,36 @@ const Index = () => {
       </Section>
 
       {/* Services Preview */}
-      <Section className="bg-muted/50">
+      <Section className="bg-muted/50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-primary/5 blur-3xl"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-cyber-green/5 blur-3xl"
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          />
+          {/* Floating grid pattern */}
+          <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
         <SectionTitle
           subtitle="Our Services"
           title="Comprehensive Cybersecurity Solutions"
           description="From security audits to corporate training, we protect and empower organizations"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
           {(services || []).slice(0, 6).map((service, i) => (
             <motion.div
               key={service.id}
@@ -258,23 +297,44 @@ const Index = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={cardVariants}
-              whileHover={{ y: -8, rotateY: 2, rotateX: -2 }}
-              className="bg-card rounded-2xl p-8 border border-border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30"
+              whileHover={{ y: -12, rotateY: 3, rotateX: -3, scale: 1.02 }}
+              className="group bg-card rounded-2xl p-8 border border-border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 relative overflow-hidden"
               style={{ transformStyle: "preserve-3d" }}
             >
+              {/* Card glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-transparent group-hover:to-cyber-green/5 transition-all duration-700" />
+              {/* Animated border line */}
               <motion.div
-                className="w-14 h-14 bg-gradient-to-br from-primary/20 to-cyber-green/20 rounded-xl flex items-center justify-center mb-5"
-                whileHover={{ rotate: 360 }}
+                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary to-cyber-green"
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 + 0.3, duration: 0.8, ease: "easeOut" }}
+              />
+              <motion.div
+                className="relative z-10 w-14 h-14 bg-gradient-to-br from-primary/20 to-cyber-green/20 rounded-xl flex items-center justify-center mb-5"
+                whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.6 }}
               >
                 <Briefcase className="h-7 w-7 text-primary" />
               </motion.div>
-              <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+              <h3 className="relative z-10 font-heading font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="relative z-10 text-sm text-muted-foreground">
                 {service.short_description}
               </p>
+              {/* Floating particles inside card */}
+              <motion.div
+                className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-primary/20"
+                animate={{ y: [-5, 5, -5], opacity: [0.2, 0.5, 0.2] }}
+                transition={{ repeat: Infinity, duration: 2 + i * 0.3, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute top-12 right-8 w-1.5 h-1.5 rounded-full bg-cyber-green/20"
+                animate={{ y: [5, -5, 5], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ repeat: Infinity, duration: 3 + i * 0.2, ease: "easeInOut" }}
+              />
             </motion.div>
           ))}
         </div>
