@@ -22,6 +22,7 @@ import AdminCertificatesPage from "./pages/admin/AdminCertificatesPage";
 import AdminBlogsPage from "./pages/admin/AdminBlogsPage";
 import AdminApplicationsPage from "./pages/admin/AdminApplicationsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
+import AdminAchievementsPage from "./pages/admin/AdminAchievementsPage";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/admin/blogs" element={<AdminBlogsPage />} />
           <Route path="/admin/applications" element={<AdminApplicationsPage />} />
           <Route path="/admin/settings" element={<AdminSettingsPage />} />
+          <Route path="/admin/achievements" element={<AdminAchievementsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
