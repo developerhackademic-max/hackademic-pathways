@@ -23,6 +23,7 @@ import AdminBlogsPage from "./pages/admin/AdminBlogsPage";
 import AdminApplicationsPage from "./pages/admin/AdminApplicationsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 import AdminAchievementsPage from "./pages/admin/AdminAchievementsPage";
+import AdminSuccessGalleryPage from "./pages/admin/AdminSuccessGalleryPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/admin/applications" element={<AdminApplicationsPage />} />
           <Route path="/admin/settings" element={<AdminSettingsPage />} />
           <Route path="/admin/achievements" element={<AdminAchievementsPage />} />
+          <Route path="/admin/success-gallery" element={<AdminSuccessGalleryPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFound />} />

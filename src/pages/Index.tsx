@@ -5,7 +5,7 @@ import { Section, SectionTitle } from "@/components/Section";
 import { PublicLayout } from "@/components/PublicLayout";
 import { AIChatbot } from "@/components/AIChatbot";
 import { AchievementsSection } from "@/components/AchievementsSection";
-import { Shield, BookOpen, Briefcase, Award, ArrowRight, CheckCircle, Users, Globe, Eye } from "lucide-react";
+import { Shield, BookOpen, Briefcase, Award, ArrowRight, CheckCircle, Users, Globe, Eye, FileText } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useRef } from "react";
@@ -17,6 +17,8 @@ import courseThreat from "@/assets/course-threat-intel.jpg";
 import courseGraphic from "@/assets/course-graphic-design.jpg";
 import coursePython from "@/assets/course-python.jpg";
 import courseRhcsa from "@/assets/course-rhcsa.jpg";
+import serviceSecurity from "@/assets/service-security.jpg";
+import serviceTraining from "@/assets/service-training.jpg";
 
 const stats = [
   { icon: Users, value: "500+", label: "Students Trained" },
@@ -272,7 +274,6 @@ const Index = () => {
             animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
           />
-          {/* Floating grid pattern */}
           <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -288,6 +289,33 @@ const Index = () => {
           title="Comprehensive Cybersecurity Solutions"
           description="From security audits to corporate training, we protect and empower organizations"
         />
+
+        {/* Service banner images */}
+        <div className="grid md:grid-cols-2 gap-6 mb-10 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl overflow-hidden h-48 relative group"
+          >
+            <img src={serviceSecurity} alt="Security Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
+              <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Enterprise Security Solutions</p>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl overflow-hidden h-48 relative group"
+          >
+            <img src={serviceTraining} alt="Training Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
+              <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Corporate Training Programs</p>
+            </div>
+          </motion.div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
           {(services || []).slice(0, 6).map((service, i) => (
             <motion.div
@@ -298,12 +326,10 @@ const Index = () => {
               viewport={{ once: true }}
               variants={cardVariants}
               whileHover={{ y: -12, rotateY: 3, rotateX: -3, scale: 1.02 }}
-              className="group bg-card rounded-2xl p-8 border border-border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 relative overflow-hidden"
+              className="group bg-card rounded-2xl p-8 border border-border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 relative overflow-hidden flex flex-col"
               style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Card glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-transparent group-hover:to-cyber-green/5 transition-all duration-700" />
-              {/* Animated border line */}
               <motion.div
                 className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary to-cyber-green"
                 initial={{ width: "0%" }}
@@ -321,19 +347,18 @@ const Index = () => {
               <h3 className="relative z-10 font-heading font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
-              <p className="relative z-10 text-sm text-muted-foreground">
+              <p className="relative z-10 text-sm text-muted-foreground flex-1">
                 {service.short_description}
               </p>
-              {/* Floating particles inside card */}
+              <Link to="/services" className="relative z-10 mt-4">
+                <Button size="sm" variant="outline" className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                  <FileText className="h-3 w-3" /> Get Quotation
+                </Button>
+              </Link>
               <motion.div
                 className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-primary/20"
                 animate={{ y: [-5, 5, -5], opacity: [0.2, 0.5, 0.2] }}
                 transition={{ repeat: Infinity, duration: 2 + i * 0.3, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute top-12 right-8 w-1.5 h-1.5 rounded-full bg-cyber-green/20"
-                animate={{ y: [5, -5, 5], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ repeat: Infinity, duration: 3 + i * 0.2, ease: "easeInOut" }}
               />
             </motion.div>
           ))}

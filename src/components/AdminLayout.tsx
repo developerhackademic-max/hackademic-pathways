@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Shield, BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy } from "lucide-react";
+import { Shield, BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const adminLinks = [
@@ -13,6 +13,7 @@ const adminLinks = [
   { label: "Blogs", path: "/admin/blogs", icon: FileText },
   { label: "Applications", path: "/admin/applications", icon: Mail },
   { label: "Achievements", path: "/admin/achievements", icon: Trophy },
+  { label: "Success Gallery", path: "/admin/success-gallery", icon: Camera },
   { label: "Settings", path: "/admin/settings", icon: Settings },
 ];
 
@@ -34,7 +35,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/admin/login");
+    navigate("/");
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
