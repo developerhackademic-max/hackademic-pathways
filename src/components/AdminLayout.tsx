@@ -1,8 +1,9 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Shield, BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera } from "lucide-react";
+import { BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 const adminLinks = [
   { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
@@ -46,7 +47,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       <aside className="w-64 bg-card border-r border-border flex flex-col">
         <div className="p-4 border-b border-border">
           <Link to="/" className="flex items-center gap-2">
-            <Shield className="h-7 w-7 text-primary" />
+            <img src={logo} alt="HACKADEMIC" className="h-8 w-8 object-contain" />
             <span className="font-heading font-bold text-lg text-foreground">
               HACK<span className="text-primary">ACADEMIC</span>
             </span>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Shield, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Shield className="h-8 w-8 text-primary" />
+              <img src={logo} alt="HACKADEMIC" className="h-9 w-9 object-contain" />
               <span className="text-xl font-heading font-bold">
                 HACK<span className="text-primary">ACADEMIC</span>
               </span>
