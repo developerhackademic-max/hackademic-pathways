@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PublicLayout } from "@/components/PublicLayout";
@@ -5,19 +6,42 @@ import { Section, SectionTitle } from "@/components/Section";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Download } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowRight, Clock, Download, Search, BookOpen, Shield, Award, Users } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import coursesHero from "@/assets/courses-hero.jpg";
+import courseCyber from "@/assets/course-cyber-security.jpg";
+import courseVapt from "@/assets/course-vapt.jpg";
+import courseCcna from "@/assets/course-ccna.jpg";
+import courseThreat from "@/assets/course-threat-intel.jpg";
+import courseGraphic from "@/assets/course-graphic-design.jpg";
+import coursePython from "@/assets/course-python.jpg";
+import courseRhcsa from "@/assets/course-rhcsa.jpg";
 
-const courseIcons: Record<string, string> = {
-  "cyber-security": "🛡️",
-  vapt: "🔍",
-  "ccna-network-security": "🌐",
-  "threat-intelligence": "🎯",
-  "graphic-designing": "🎨",
-  python: "🐍",
-  rhcsa: "🐧",
+const courseImages: Record<string, string> = {
+  "cyber-security": courseCyber,
+  vapt: courseVapt,
+  "ccna-network-security": courseCcna,
+  "threat-intelligence": courseThreat,
+  "graphic-designing": courseGraphic,
+  python: coursePython,
+  rhcsa: courseRhcsa,
 };
 
+const highlights = [
+  { icon: Shield, value: "100%", label: "Job Assistance" },
+  { icon: BookOpen, value: "22+", label: "Modules" },
+  { icon: Award, value: "5+", label: "Certifications" },
+  { icon: Users, value: "500+", label: "Students Trained" },
+];
+
 export default function CoursesPage() {
+  const { toast } = useToast();
+  const [search, setSearch] = useState("");
+  const [inquiryForm, setInquiryForm] = useState({ full_name: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+
   const { data: courses } = useQuery({
     queryKey: ["courses"],
     queryFn: async () => {
@@ -26,46 +50,138 @@ export default function CoursesPage() {
     },
   });
 
+  const filtered = (courses || []).filter((c) =>
+    c.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleInquiry = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const { error } = await supabase.from("course_inquiries").insert([inquiryForm]);
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Inquiry Submitted!", description: "We'll get back to you soon." });
+      setInquiryForm({ full_name: "", email: "", phone: "", message: "" });
+    }
+  };
+
   return (
     <PublicLayout>
-      <section className="hero-section py-32">
-        <div className="container mx-auto px-4 text-center">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-heading font-bold mb-4" style={{ color: "white" }}>
-            Our <span className="text-primary">Courses</span>
+      {/* Hero */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={coursesHero} alt="Courses" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/60" />
+        </div>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-primary/30"
+              style={{ left: `${10 + i * 12}%`, top: `${20 + (i % 4) * 20}%` }}
+              animate={{ y: [-20, 20, -20], opacity: [0.2, 0.6, 0.2] }}
+              transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
+            />
+          ))}
+        </div>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4"
+            style={{ color: "white" }}
+          >
+            Explore <span className="text-primary">Courses</span>
           </motion.h1>
-          <p className="text-lg max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.7)" }}>
-            Industry-leading cybersecurity and technology training programs
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-lg max-w-2xl mx-auto mb-8"
+            style={{ color: "rgba(255,255,255,0.7)" }}
+          >
+            Industry-leading cybersecurity and technology training programs designed by experts
+          </motion.p>
+          {/* Search */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-md mx-auto relative"
+          >
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search courses..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 bg-card/90 border-border/50"
+            />
+          </motion.div>
         </div>
       </section>
 
+      {/* Highlights Stats */}
+      <section className="relative -mt-12 z-20">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {highlights.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-card rounded-xl p-5 shadow-lg border border-border text-center"
+              >
+                <stat.icon className="h-7 w-7 text-primary mx-auto mb-2" />
+                <div className="text-2xl font-heading font-bold text-foreground">{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Course Cards */}
       <Section>
-        <SectionTitle subtitle="Programs" title="Explore Our Courses" description="Choose from our wide range of industry-relevant courses" />
+        <SectionTitle subtitle="Programs" title="Our Training Programs" description="Choose from our wide range of industry-relevant courses" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(courses || []).map((course, i) => (
+          {filtered.map((course, i) => (
             <motion.div
               key={course.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              transition={{ delay: i * 0.06 }}
+              whileHover={{ y: -8 }}
             >
-              <div className="bg-card rounded-2xl border border-border overflow-hidden card-float h-full flex flex-col">
-                <div className="bg-gradient-to-br from-primary/10 to-sky-light/50 p-8 text-center">
-                  <span className="text-5xl">{courseIcons[course.slug] || "📚"}</span>
-                </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="font-heading font-bold text-xl text-foreground mb-2">{course.title}</h3>
-                  <p className="text-sm text-muted-foreground flex-1">{course.short_description}</p>
+              <div className="group bg-card rounded-2xl border border-border overflow-hidden h-full flex flex-col transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
+                {/* Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={courseImages[course.slug] || courseCyber}
+                    alt={course.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
                   {course.duration && (
-                    <div className="flex items-center gap-1 text-xs text-primary mt-3">
+                    <div className="absolute top-3 right-3 bg-primary/90 text-primary-foreground text-xs px-3 py-1 rounded-full flex items-center gap-1">
                       <Clock className="h-3 w-3" /> {course.duration}
                     </div>
                   )}
-                  <div className="flex gap-2 mt-4">
+                </div>
+                {/* Content */}
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="font-heading font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground flex-1 line-clamp-2">{course.short_description}</p>
+                  <div className="flex gap-2 mt-5">
                     <Link to={`/courses/${course.slug}`} className="flex-1">
                       <Button size="sm" className="w-full gap-1">
-                        Learn More <ArrowRight className="h-3 w-3" />
+                        View Program <ArrowRight className="h-3 w-3" />
                       </Button>
                     </Link>
                     {course.brochure_url && (
@@ -80,6 +196,83 @@ export default function CoursesPage() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </Section>
+
+      {/* Inquire Now Section */}
+      <Section className="bg-muted/50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-primary/5 blur-3xl"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ repeat: Infinity, duration: 6 }}
+          />
+        </div>
+        <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <SectionTitle subtitle="Get in Touch" title="Inquire Now" description="Fill in your details and our counselors will reach out to you" center={false} />
+            <div className="space-y-4 mt-6">
+              {["Expert Career Guidance", "Free Demo Classes", "Flexible Learning Options", "Placement Assistance"].map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="text-foreground">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <form onSubmit={handleInquiry} className="bg-card rounded-2xl border border-border p-8 space-y-4 shadow-lg">
+              <h3 className="font-heading font-bold text-xl text-foreground mb-2">Request Information</h3>
+              <Input
+                placeholder="Full Name *"
+                value={inquiryForm.full_name}
+                onChange={(e) => setInquiryForm({ ...inquiryForm, full_name: e.target.value })}
+                required
+              />
+              <Input
+                placeholder="Email *"
+                type="email"
+                value={inquiryForm.email}
+                onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
+                required
+              />
+              <Input
+                placeholder="Phone *"
+                value={inquiryForm.phone}
+                onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                required
+              />
+              <Textarea
+                placeholder="Message (optional)"
+                value={inquiryForm.message}
+                onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                rows={3}
+              />
+              <Button type="submit" className="w-full" disabled={submitting}>
+                {submitting ? "Submitting..." : "Submit Inquiry"}
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                By submitting, you agree to our{" "}
+                <Link to="/terms" className="text-primary hover:underline">Terms</Link> and{" "}
+                <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+              </p>
+            </form>
+          </motion.div>
         </div>
       </Section>
     </PublicLayout>
