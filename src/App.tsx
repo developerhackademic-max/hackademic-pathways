@@ -24,6 +24,10 @@ import AdminApplicationsPage from "./pages/admin/AdminApplicationsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 import AdminAchievementsPage from "./pages/admin/AdminAchievementsPage";
 import AdminSuccessGalleryPage from "./pages/admin/AdminSuccessGalleryPage";
+import AdminInquiriesPage from "./pages/admin/AdminInquiriesPage";
+import AdminStudentStoriesPage from "./pages/admin/AdminStudentStoriesPage";
+import AdminProjectsPage from "./pages/admin/AdminProjectsPage";
+import AdminTrainersPage from "./pages/admin/AdminTrainersPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
 
@@ -56,6 +60,10 @@ const App = () => (
           <Route path="/admin/settings" element={<AdminSettingsPage />} />
           <Route path="/admin/achievements" element={<AdminAchievementsPage />} />
           <Route path="/admin/success-gallery" element={<AdminSuccessGalleryPage />} />
+          <Route path="/admin/inquiries" element={<AdminInquiriesPage />} />
+          <Route path="/admin/student-stories" element={<AdminStudentStoriesPage />} />
+          <Route path="/admin/projects" element={<AdminProjectsPage />} />
+          <Route path="/admin/trainers" element={<AdminTrainersPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFound />} />

@@ -190,6 +190,91 @@ export type Database = {
         }
         Relationships: []
       }
+      course_inquiries: {
+        Row: {
+          course_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          phone: string
+          status: string | null
+        }
+        Insert: {
+          course_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          phone: string
+          status?: string | null
+        }
+        Update: {
+          course_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          phone?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_inquiries_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_projects: {
+        Row: {
+          course_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_projects_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       courses: {
         Row: {
           brochure_url: string | null
@@ -234,6 +319,51 @@ export type Database = {
           slug?: string
           sort_order?: number | null
           title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      expert_trainers: {
+        Row: {
+          bio: string | null
+          created_at: string
+          designation: string
+          experience_years: number | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          linkedin_url: string | null
+          name: string
+          sort_order: number | null
+          specialization: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          designation: string
+          experience_years?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          linkedin_url?: string | null
+          name: string
+          sort_order?: number | null
+          specialization?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          designation?: string
+          experience_years?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          linkedin_url?: string | null
+          name?: string
+          sort_order?: number | null
+          specialization?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -300,6 +430,59 @@ export type Database = {
           value?: string | null
         }
         Relationships: []
+      }
+      student_stories: {
+        Row: {
+          company: string | null
+          course_id: string | null
+          created_at: string
+          designation: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          sort_order: number | null
+          student_name: string
+          testimonial: string | null
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          company?: string | null
+          course_id?: string | null
+          created_at?: string
+          designation?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          student_name: string
+          testimonial?: string | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          company?: string | null
+          course_id?: string | null
+          created_at?: string
+          designation?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          student_name?: string
+          testimonial?: string | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_stories_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       success_gallery: {
         Row: {

@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera } from "lucide-react";
+import { BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera, MessageSquare, Star, FolderOpen, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
@@ -13,6 +13,10 @@ const adminLinks = [
   { label: "Certificates", path: "/admin/certificates", icon: Award },
   { label: "Blogs", path: "/admin/blogs", icon: FileText },
   { label: "Applications", path: "/admin/applications", icon: Mail },
+  { label: "Inquiries", path: "/admin/inquiries", icon: MessageSquare },
+  { label: "Student Stories", path: "/admin/student-stories", icon: Star },
+  { label: "Projects", path: "/admin/projects", icon: FolderOpen },
+  { label: "Trainers", path: "/admin/trainers", icon: GraduationCap },
   { label: "Achievements", path: "/admin/achievements", icon: Trophy },
   { label: "Success Gallery", path: "/admin/success-gallery", icon: Camera },
   { label: "Settings", path: "/admin/settings", icon: Settings },
@@ -43,7 +47,6 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen flex bg-muted/30">
-      {/* Sidebar */}
       <aside className="w-64 bg-card border-r border-border flex flex-col">
         <div className="p-4 border-b border-border">
           <Link to="/" className="flex items-center gap-2">
@@ -54,12 +57,12 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           </Link>
           <p className="text-xs text-muted-foreground mt-1">Admin Panel</p>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {adminLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
                 location.pathname === link.path
                   ? "bg-primary/10 text-primary font-medium"
                   : "text-foreground/70 hover:bg-muted hover:text-foreground"
@@ -76,8 +79,6 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           </Button>
         </div>
       </aside>
-
-      {/* Content */}
       <div className="flex-1 overflow-auto">
         <div className="p-8">{children}</div>
       </div>

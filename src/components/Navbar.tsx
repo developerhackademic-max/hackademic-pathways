@@ -10,10 +10,10 @@ const navItems = [
   {
     label: "About Us",
     children: [
-      { label: "About Hackademic", path: "/about" },
+      { label: "About HACKADEMIC", path: "/about" },
       { label: "Mission & Vision", path: "/about#mission" },
       { label: "Leadership Team", path: "/about#team" },
-      { label: "Why Hackademic", path: "/about#why" },
+      { label: "Why HACKADEMIC", path: "/about#why" },
       { label: "Blogs", path: "/blogs" },
     ],
   },
