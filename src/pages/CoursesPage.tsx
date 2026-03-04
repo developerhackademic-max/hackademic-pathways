@@ -75,30 +75,46 @@ export default function CoursesPage() {
           <img src={coursesHero} alt="Courses" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/60" />
         </div>
+        {/* Animated grid overlay */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
+          <motion.div
+            className="absolute inset-0 opacity-10"
+            style={{ backgroundImage: "linear-gradient(hsl(var(--primary)/0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)/0.3) 1px, transparent 1px)", backgroundSize: "60px 60px" }}
+            animate={{ backgroundPosition: ["0px 0px", "60px 60px"] }}
+            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          />
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 rounded-full bg-primary/30"
-              style={{ left: `${10 + i * 12}%`, top: `${20 + (i % 4) * 20}%` }}
-              animate={{ y: [-20, 20, -20], opacity: [0.2, 0.6, 0.2] }}
-              transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
+              className="absolute w-1.5 h-1.5 rounded-full bg-primary/40"
+              style={{ left: `${5 + i * 8}%`, top: `${15 + (i % 5) * 18}%` }}
+              animate={{ y: [-25, 25, -25], opacity: [0.1, 0.7, 0.1], scale: [0.8, 1.2, 0.8] }}
+              transition={{ repeat: Infinity, duration: 2.5 + i * 0.3, ease: "easeInOut" }}
             />
           ))}
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10"
+          >
+            <span className="text-primary text-sm font-semibold tracking-wide">🎓 Industry-Leading Programs</span>
+          </motion.div>
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4"
             style={{ color: "white" }}
           >
-            Explore <span className="text-primary">Courses</span>
+            Explore Our <span className="text-primary">Courses</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.2 }}
             className="text-lg max-w-2xl mx-auto mb-8"
             style={{ color: "rgba(255,255,255,0.7)" }}
           >
@@ -108,7 +124,7 @@ export default function CoursesPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.3 }}
             className="max-w-md mx-auto relative"
           >
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -129,13 +145,19 @@ export default function CoursesPage() {
             {highlights.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card rounded-xl p-5 shadow-lg border border-border text-center"
+                transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
+                whileHover={{ y: -5, scale: 1.03 }}
+                className="bg-card rounded-xl p-5 shadow-lg border border-border text-center hover:border-primary/30 hover:shadow-primary/10 transition-all"
               >
-                <stat.icon className="h-7 w-7 text-primary mx-auto mb-2" />
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ repeat: Infinity, duration: 4, delay: i * 0.5 }}
+                >
+                  <stat.icon className="h-7 w-7 text-primary mx-auto mb-2" />
+                </motion.div>
                 <div className="text-2xl font-heading font-bold text-foreground">{stat.value}</div>
                 <div className="text-xs text-muted-foreground">{stat.label}</div>
               </motion.div>
@@ -151,11 +173,11 @@ export default function CoursesPage() {
           {filtered.map((course, i) => (
             <motion.div
               key={course.id}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 40, rotateX: 5 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              whileHover={{ y: -8 }}
+              transition={{ delay: i * 0.08, type: "spring", stiffness: 150 }}
+              whileHover={{ y: -10, scale: 1.02 }}
             >
               <div className="group bg-card rounded-2xl border border-border overflow-hidden h-full flex flex-col transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30">
                 {/* Image */}
@@ -165,9 +187,11 @@ export default function CoursesPage() {
                     alt={course.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-transparent to-transparent" />
+                  {/* Animated shimmer on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 -translate-x-full" />
                   {course.duration && (
-                    <div className="absolute top-3 right-3 bg-primary/90 text-primary-foreground text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                    <div className="absolute top-3 right-3 bg-primary/90 text-primary-foreground text-xs px-3 py-1 rounded-full flex items-center gap-1 backdrop-blur-sm">
                       <Clock className="h-3 w-3" /> {course.duration}
                     </div>
                   )}
@@ -178,10 +202,19 @@ export default function CoursesPage() {
                     {course.title}
                   </h3>
                   <p className="text-sm text-muted-foreground flex-1 line-clamp-2">{course.short_description}</p>
-                  <div className="flex gap-2 mt-5">
+                  
+                  {/* Duration info row */}
+                  {course.duration && (
+                    <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+                      <Clock className="h-3.5 w-3.5 text-primary" />
+                      <span>Duration: <strong className="text-foreground">{course.duration}</strong></span>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2 mt-4">
                     <Link to={`/courses/${course.slug}`} className="flex-1">
-                      <Button size="sm" className="w-full gap-1">
-                        View Program <ArrowRight className="h-3 w-3" />
+                      <Button size="sm" className="w-full gap-1 group/btn">
+                        View Program <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
                       </Button>
                     </Link>
                     {course.brochure_url && (
@@ -204,7 +237,12 @@ export default function CoursesPage() {
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
             className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-primary/5 blur-3xl"
-            animate={{ scale: [1, 1.2, 1] }}
+            animate={{ scale: [1, 1.3, 1], rotate: [0, 90, 0] }}
+            transition={{ repeat: Infinity, duration: 8 }}
+          />
+          <motion.div
+            className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-primary/5 blur-3xl"
+            animate={{ scale: [1.2, 1, 1.2] }}
             transition={{ repeat: Infinity, duration: 6 }}
           />
         </div>
@@ -225,7 +263,11 @@ export default function CoursesPage() {
                   transition={{ delay: i * 0.1 }}
                   className="flex items-center gap-3"
                 >
-                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-primary"
+                    animate={{ scale: [1, 1.5, 1] }}
+                    transition={{ repeat: Infinity, duration: 2, delay: i * 0.3 }}
+                  />
                   <span className="text-foreground">{item}</span>
                 </motion.div>
               ))}
@@ -238,31 +280,10 @@ export default function CoursesPage() {
           >
             <form onSubmit={handleInquiry} className="bg-card rounded-2xl border border-border p-8 space-y-4 shadow-lg">
               <h3 className="font-heading font-bold text-xl text-foreground mb-2">Request Information</h3>
-              <Input
-                placeholder="Full Name *"
-                value={inquiryForm.full_name}
-                onChange={(e) => setInquiryForm({ ...inquiryForm, full_name: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Email *"
-                type="email"
-                value={inquiryForm.email}
-                onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Phone *"
-                value={inquiryForm.phone}
-                onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                required
-              />
-              <Textarea
-                placeholder="Message (optional)"
-                value={inquiryForm.message}
-                onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
-                rows={3}
-              />
+              <Input placeholder="Full Name *" value={inquiryForm.full_name} onChange={(e) => setInquiryForm({ ...inquiryForm, full_name: e.target.value })} required />
+              <Input placeholder="Email *" type="email" value={inquiryForm.email} onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })} required />
+              <Input placeholder="Phone *" value={inquiryForm.phone} onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })} required />
+              <Textarea placeholder="Message (optional)" value={inquiryForm.message} onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })} rows={3} />
               <Button type="submit" className="w-full" disabled={submitting}>
                 {submitting ? "Submitting..." : "Submit Inquiry"}
               </Button>
