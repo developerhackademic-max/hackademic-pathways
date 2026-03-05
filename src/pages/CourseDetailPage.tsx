@@ -126,7 +126,8 @@ export default function CourseDetailPage() {
   if (isLoading) return <PublicLayout><div className="flex items-center justify-center min-h-[60vh]"><motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full" /></div></PublicLayout>;
   if (!course) return <PublicLayout><div className="flex items-center justify-center min-h-[60vh]"><p className="text-muted-foreground">Course not found</p></div></PublicLayout>;
 
-  const modules = (course.modules as string[]) || [];
+  const rawModules = course.modules;
+  const modules: string[] = Array.isArray(rawModules) ? rawModules.map(String) : [];
   const tools = courseTools[course.slug] || ["Kali Linux", "Wireshark", "Metasploit", "Nmap", "Burp Suite"];
 
   const courseHighlights = [
