@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera, MessageSquare, Star, FolderOpen, GraduationCap } from "lucide-react";
+import { BookOpen, Briefcase, Users, Award, FileText, Settings, LogOut, Mail, LayoutDashboard, Trophy, Camera, MessageSquare, Star, FolderOpen, GraduationCap, HelpCircle, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
@@ -17,6 +17,8 @@ const adminLinks = [
   { label: "Student Stories", path: "/admin/student-stories", icon: Star },
   { label: "Projects", path: "/admin/projects", icon: FolderOpen },
   { label: "Trainers", path: "/admin/trainers", icon: GraduationCap },
+  { label: "FAQs", path: "/admin/faqs", icon: HelpCircle },
+  { label: "Sample Certificates", path: "/admin/sample-certificates", icon: Image },
   { label: "Achievements", path: "/admin/achievements", icon: Trophy },
   { label: "Success Gallery", path: "/admin/success-gallery", icon: Camera },
   { label: "Settings", path: "/admin/settings", icon: Settings },
