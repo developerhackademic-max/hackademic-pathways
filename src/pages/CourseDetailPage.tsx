@@ -326,11 +326,28 @@ export default function CourseDetailPage() {
   if (!course) return <PublicLayout><div className="flex items-center justify-center min-h-[60vh]"><p className="text-muted-foreground">Course not found</p></div></PublicLayout>;
 
   const rawModules = course.modules;
-  const modules: string[] = Array.isArray(rawModules) ? rawModules.map(String) : [];
-  const tools = courseTools[course.slug] || ["Kali Linux", "Wireshark", "Metasploit", "Nmap", "Burp Suite"];
-  const fallbackProjects = courseProjects[course.slug] || courseProjects["cyber-security"];
-  const fallbackStories = courseStories[course.slug] || courseStories["cyber-security"];
-  const fallbackTrainers = courseTrainers[course.slug] || courseTrainers["cyber-security"];
+  const modulesFromDb: string[] = Array.isArray(rawModules) ? rawModules.map(String) : [];
+  const modules = modulesFromDb.length > 0 ? modulesFromDb : (defaultCurriculum[course.slug] || []);
+  const tools = courseTools[course.slug] || ["Industry Tools", "Virtual Labs", "Online IDE", "Version Control", "Documentation"];
+  const fallbackProjects = courseProjects[course.slug] || [
+    { title: "Capstone Project", desc: "Apply all learned concepts in a comprehensive final project" },
+    { title: "Industry Case Study", desc: "Analyze and solve real industry problems using course concepts" },
+    { title: "Portfolio Project", desc: "Build a professional portfolio piece to showcase your skills" },
+    { title: "Team Collaboration", desc: "Work in teams to deliver a multi-module project" },
+    { title: "Research Assignment", desc: "Research and present on emerging trends in the field" },
+    { title: "Practical Assessment", desc: "Demonstrate practical skills in a timed assessment environment" },
+  ];
+  const fallbackStories = courseStories[course.slug] || [
+    { name: "Student A", role: "Successfully Placed", quote: "The hands-on training at HACKADEMIC gave me the confidence to excel in my career." },
+    { name: "Student B", role: "Career Changer", quote: "Excellent mentorship and practical projects helped me transition into this field seamlessly." },
+    { name: "Student C", role: "Skill Enhancement", quote: "The curriculum was perfectly aligned with industry requirements. Highly recommended!" },
+  ];
+  const fallbackTrainers = courseTrainers[course.slug] || [
+    { name: "Industry Expert", title: "Senior Trainer", exp: "8+" },
+    { name: "Certified Professional", title: "Lead Instructor", exp: "10+" },
+    { name: "Subject Matter Expert", title: "Technical Mentor", exp: "7+" },
+  ];
+  const activeBenefits = courseBenefitsMap[course.slug] || benefitsData;
 
   const courseHighlights = [
     { icon: Briefcase, value: "100%", label: "Job Assistance" },
@@ -438,7 +455,7 @@ export default function CourseDetailPage() {
         <div className="relative z-10">
           <SectionTitle subtitle="Why Join" title="Benefits of this Program" description="What makes HACKADEMIC's training stand out from the rest" />
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {benefitsData.map((benefit) => (
+            {activeBenefits.map((benefit) => (
               <motion.div key={benefit.title} variants={itemVariants} whileHover={{ y: -10, scale: 1.02 }} className="bg-card rounded-2xl border border-border p-7 hover:shadow-xl hover:border-primary/30 transition-all group">
                 <motion.div className={`w-14 h-14 bg-gradient-to-br ${benefit.color} rounded-xl flex items-center justify-center mb-5`} whileHover={{ rotate: 15, scale: 1.1 }}>
                   <benefit.icon className="h-7 w-7 text-primary" />
