@@ -33,6 +33,8 @@ import AdminFaqsPage from "./pages/admin/AdminFaqsPage";
 import AdminSampleCertificatesPage from "./pages/admin/AdminSampleCertificatesPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
+import InternshipPage from "./pages/InternshipPage";
+import QuotationPage from "./pages/QuotationPage";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,8 @@ const App = () => (
           <Route path="/admin/trainers" element={<AdminTrainersPage />} />
           <Route path="/admin/faqs" element={<AdminFaqsPage />} />
           <Route path="/admin/sample-certificates" element={<AdminSampleCertificatesPage />} />
+          <Route path="/internship" element={<InternshipPage />} />
+          <Route path="/quotation" element={<QuotationPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFound />} />
