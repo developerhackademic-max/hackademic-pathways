@@ -57,13 +57,18 @@ export default function AboutPage() {
 
   return (
     <PublicLayout>
-      {/* Hero Banner - Full width like Brillica */}
+      {/* Hero Banner with Video */}
       <section className="relative py-40 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={aboutHero} alt="About HACKADEMIC" className="w-full h-full object-cover" />
+          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
+            <source src="https://cdn.pixabay.com/video/2020/07/30/45720-446137409_large.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-navy/80" />
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10">
+            <span className="text-primary text-sm font-semibold">🏢 Who We Are</span>
+          </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,11 +90,11 @@ export default function AboutPage() {
         </div>
         {/* Animated particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-2 h-2 rounded-full bg-primary/30"
-              style={{ left: `${10 + i * 12}%`, top: `${20 + (i % 4) * 20}%` }}
+              style={{ left: `${10 + i * 7}%`, top: `${20 + (i % 4) * 20}%` }}
               animate={{ y: [-20, 20, -20], opacity: [0.2, 0.6, 0.2] }}
               transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
             />

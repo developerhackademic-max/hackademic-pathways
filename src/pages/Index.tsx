@@ -292,28 +292,32 @@ const Index = () => {
 
         {/* Service banner images */}
         <div className="grid md:grid-cols-2 gap-6 mb-10 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden h-48 relative group"
-          >
-            <img src={serviceSecurity} alt="Security Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
-              <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Enterprise Security Solutions</p>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden h-48 relative group"
-          >
-            <img src={serviceTraining} alt="Training Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
-              <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Corporate Training Programs</p>
-            </div>
-          </motion.div>
+          <Link to="/services">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl overflow-hidden h-48 relative group cursor-pointer"
+            >
+              <img src={serviceSecurity} alt="Security Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
+                <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Enterprise Security Solutions</p>
+              </div>
+            </motion.div>
+          </Link>
+          <Link to="/services">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl overflow-hidden h-48 relative group cursor-pointer"
+            >
+              <img src={serviceTraining} alt="Training Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end p-6">
+                <p className="text-lg font-heading font-bold" style={{ color: "white" }}>Corporate Training Programs</p>
+              </div>
+            </motion.div>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
@@ -350,7 +354,7 @@ const Index = () => {
               <p className="relative z-10 text-sm text-muted-foreground flex-1">
                 {service.short_description}
               </p>
-              <Link to="/services" className="relative z-10 mt-4">
+              <Link to={`/quotation?service=${encodeURIComponent(service.title)}`} className="relative z-10 mt-4">
                 <Button size="sm" variant="outline" className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                   <FileText className="h-3 w-3" /> Get Quotation
                 </Button>

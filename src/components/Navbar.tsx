@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,13 @@ const navItems = [
       { label: "Blogs", path: "/blogs" },
     ],
   },
-  { label: "Courses", path: "/courses" },
+  {
+    label: "Courses",
+    children: [
+      { label: "All Courses", path: "/courses" },
+      { label: "Internship at Hackademic", path: "/internship" },
+    ],
+  },
   { label: "Services", path: "/services" },
   { label: "Contact Us", path: "/contact" },
   { label: "Verify Certificate", path: "/verify" },
@@ -26,10 +32,26 @@ const navItems = [
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
+    <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        scrolled
+          ? "bg-card/95 backdrop-blur-xl border-border shadow-lg shadow-primary/5"
+          : "glass border-border/50"
+      }`}
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="HACKADEMIC" className="h-9 w-9 object-contain" />
@@ -50,7 +72,7 @@ export function Navbar() {
               >
                 <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-md">
                   {item.label}
-                  <ChevronDown className="h-3 w-3" />
+                  <ChevronDown className={`h-3 w-3 transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
                 </button>
                 <AnimatePresence>
                   {openDropdown === item.label && (
@@ -58,7 +80,7 @@ export function Navbar() {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="absolute top-full left-0 mt-1 w-52 rounded-lg bg-card border border-border shadow-lg overflow-hidden"
+                      className="absolute top-full left-0 mt-1 w-56 rounded-lg bg-card border border-border shadow-xl overflow-hidden"
                     >
                       {item.children.map((child) => (
                         <Link
@@ -150,6 +172,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }

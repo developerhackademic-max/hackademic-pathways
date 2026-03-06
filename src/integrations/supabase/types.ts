@@ -431,6 +431,54 @@ export type Database = {
         }
         Relationships: []
       }
+      service_quotations: {
+        Row: {
+          additional_requirements: string | null
+          company_name: string
+          contact_name: string
+          created_at: string
+          designation: string | null
+          email: string
+          estimated_budget: string | null
+          id: string
+          phone: string
+          project_description: string | null
+          service_title: string
+          status: string | null
+          timeline: string | null
+        }
+        Insert: {
+          additional_requirements?: string | null
+          company_name: string
+          contact_name: string
+          created_at?: string
+          designation?: string | null
+          email: string
+          estimated_budget?: string | null
+          id?: string
+          phone: string
+          project_description?: string | null
+          service_title: string
+          status?: string | null
+          timeline?: string | null
+        }
+        Update: {
+          additional_requirements?: string | null
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          designation?: string | null
+          email?: string
+          estimated_budget?: string | null
+          id?: string
+          phone?: string
+          project_description?: string | null
+          service_title?: string
+          status?: string | null
+          timeline?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string

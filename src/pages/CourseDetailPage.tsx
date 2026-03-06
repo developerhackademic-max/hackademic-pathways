@@ -187,6 +187,69 @@ const courseTrainers: Record<string, { name: string; title: string; exp: string 
   ],
 };
 
+// Course-specific benefits
+const courseBenefitsMap: Record<string, typeof benefitsData> = {
+  "cyber-security": [
+    { title: "CEH Certification Prep", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Aligned with EC-Council CEH syllabus", "Practice exams included", "Certification voucher assistance"] },
+    { title: "Live Cyber Range Labs", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["24/7 access to virtual labs", "Simulate real attack scenarios", "Use Kali Linux, Metasploit, Burp Suite"] },
+    { title: "SOC Analyst Ready", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["SIEM dashboard training", "Log analysis & monitoring", "Incident response drills"] },
+    { title: "Expert Ethical Hackers", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["Learn from CEH/OSCP professionals", "1-on-1 mentoring sessions", "Industry networking"] },
+    { title: "Flexible Batches", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["Weekday & weekend options", "Online + offline modes", "1 year+ LMS access"] },
+    { title: "100% Placement Support", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["Resume & LinkedIn optimization", "Mock interviews with HR", "Direct company referrals"] },
+  ],
+  vapt: [
+    { title: "OSCP Aligned Training", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Hands-on penetration testing labs", "Buffer overflow & exploit dev", "OWASP Top 10 mastery"] },
+    { title: "Bug Bounty Skills", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["HackerOne & Bugcrowd methodology", "Web & API security testing", "Real vulnerability discovery"] },
+    { title: "Report Writing", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["Professional VAPT reports", "Risk scoring & remediation", "Client presentation skills"] },
+    { title: "Red Team Training", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["Advanced exploitation techniques", "Social engineering simulations", "Post-exploitation tactics"] },
+    { title: "Lab-Intensive", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["70% practical, 30% theory", "CTF challenges weekly", "HackTheBox integration"] },
+    { title: "Career in Pentesting", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["Pentest firm referrals", "Freelancing guidance", "Bug bounty earning support"] },
+  ],
+  "ccna-network-security": [
+    { title: "CCNA Certification", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Full Cisco CCNA 200-301 prep", "Practice exams & dumps", "Certification guidance"] },
+    { title: "Cisco Lab Access", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["Packet Tracer & GNS3 labs", "Real Cisco router/switch config", "Enterprise network simulation"] },
+    { title: "Network Design", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["VLAN & routing protocols", "Network architecture planning", "Troubleshooting methodology"] },
+    { title: "Security Focus", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["Firewall & ACL configuration", "VPN setup & management", "Network security best practices"] },
+    { title: "Hands-On Labs", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["Daily lab assignments", "Real hardware experience", "Network simulation projects"] },
+    { title: "NOC/Network Careers", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["Network engineer placements", "NOC analyst opportunities", "IT infrastructure roles"] },
+  ],
+  python: [
+    { title: "Python Certification", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["PCEP/PCAP aligned content", "Project-based assessment", "Portfolio certification"] },
+    { title: "Full-Stack Python", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["Django & Flask frameworks", "REST API development", "Database integration (SQL & NoSQL)"] },
+    { title: "Data Science Intro", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["Pandas & NumPy libraries", "Data visualization with Matplotlib", "Basic ML with Scikit-learn"] },
+    { title: "Automation Skills", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["Web scraping with BeautifulSoup", "Task automation scripts", "File & system management"] },
+    { title: "Project-Based Learning", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["5+ real projects included", "GitHub portfolio building", "Code review sessions"] },
+    { title: "Developer Careers", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["Python developer placements", "Freelancing opportunities", "Interview DSA prep"] },
+  ],
+  "graphic-designing": [
+    { title: "Adobe Certification", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Adobe Certified Associate prep", "Professional portfolio creation", "Design certificate"] },
+    { title: "Complete Adobe Suite", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["Photoshop, Illustrator, InDesign", "Figma & Canva Pro", "After Effects basics"] },
+    { title: "Brand Design", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["Logo & identity design", "Color theory & typography", "Brand guidelines creation"] },
+    { title: "UI/UX Design", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["Wireframing & prototyping", "User research methods", "Mobile-first design"] },
+    { title: "Creative Projects", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["Real client projects", "Social media campaigns", "Print & digital media"] },
+    { title: "Design Careers", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["UI/UX designer placements", "Freelancing startup guide", "Portfolio website creation"] },
+  ],
+  rhcsa: [
+    { title: "RHCSA Certification", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Red Hat EX200 exam aligned", "Practice exam environment", "Certification voucher assist"] },
+    { title: "Linux Server Labs", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["RHEL 9 hands-on labs", "Server deployment practice", "Cloud VM access included"] },
+    { title: "System Administration", icon: GraduationCap, color: "from-green-500/20 to-green-500/5", points: ["User & group management", "Storage & LVM configuration", "Service management with systemd"] },
+    { title: "Security Hardening", icon: Target, color: "from-purple-500/20 to-purple-500/5", points: ["SELinux policy management", "Firewalld configuration", "SSH & access controls"] },
+    { title: "Shell Scripting", icon: Zap, color: "from-cyan-500/20 to-cyan-500/5", points: ["Bash scripting automation", "Cron jobs & scheduling", "System monitoring scripts"] },
+    { title: "Linux Admin Careers", icon: TrendingUp, color: "from-rose-500/20 to-rose-500/5", points: ["Linux admin placements", "DevOps pathway guidance", "Cloud engineering prep"] },
+  ],
+};
+
+// Default curriculum for courses without modules in DB
+const defaultCurriculum: Record<string, string[]> = {
+  "cyber-security": ["Introduction to Cybersecurity", "Networking Fundamentals", "Operating System Security", "Cryptography & PKI", "Web Application Security", "Network Security & Firewalls", "Ethical Hacking Methodology", "Vulnerability Assessment", "Penetration Testing", "Malware Analysis", "Incident Response", "SIEM & Log Analysis", "Cloud Security", "Mobile Security", "IoT Security", "Cyber Law & Compliance", "Security Audit & Governance", "Career Preparation & Soft Skills"],
+  vapt: ["VAPT Introduction & Methodology", "Information Gathering & Recon", "Network Scanning with Nmap", "Vulnerability Scanning", "Web App Testing (OWASP Top 10)", "SQL Injection & XSS", "Authentication & Session Attacks", "API Security Testing", "Burp Suite Mastery", "Metasploit Framework", "Post Exploitation", "Privilege Escalation", "Wireless Network Testing", "Mobile App Security", "VAPT Report Writing", "Remediation Strategies"],
+  "ccna-network-security": ["Network Fundamentals", "OSI & TCP/IP Models", "Ethernet & Switching", "VLANs & Inter-VLAN Routing", "IP Addressing & Subnetting", "Static & Dynamic Routing", "OSPF Configuration", "Network Security Concepts", "Access Control Lists (ACLs)", "NAT & PAT", "VPN Technologies", "Wireless Networking", "Network Automation Basics", "QoS Fundamentals", "Network Troubleshooting", "CCNA Exam Preparation"],
+  "threat-intelligence": ["Intro to Threat Intelligence", "Cyber Threat Landscape", "OSINT Techniques", "Dark Web Monitoring", "Threat Actor Profiling", "MITRE ATT&CK Framework", "Indicators of Compromise", "Threat Hunting Methodology", "SIEM & Log Analysis", "Malware Triage", "Threat Intelligence Platforms", "Report Writing & Sharing", "Incident Response Integration", "Geopolitical Cyber Threats", "Threat Modeling", "CTI Career Preparation"],
+  python: ["Python Basics & Setup", "Variables, Data Types & Operators", "Control Flow & Loops", "Functions & Modules", "Object-Oriented Programming", "File Handling", "Error Handling & Debugging", "Data Structures", "Regular Expressions", "Web Scraping", "Database Connectivity", "Flask Web Framework", "REST API Development", "Data Analysis with Pandas", "Visualization with Matplotlib", "Introduction to Machine Learning", "Automation Scripts", "Project: Full-Stack App"],
+  "graphic-designing": ["Design Thinking & Principles", "Color Theory & Typography", "Adobe Photoshop Fundamentals", "Advanced Photoshop Techniques", "Adobe Illustrator Basics", "Vector Design & Logo Creation", "Layout Design with InDesign", "Figma UI/UX Design", "Wireframing & Prototyping", "Brand Identity Design", "Social Media Graphics", "Print Design & Prepress", "Motion Graphics Basics", "Portfolio Development", "Client Communication", "Freelancing & Career Guide"],
+  rhcsa: ["Linux Introduction & Installation", "File System & Navigation", "User & Group Management", "File Permissions & ACLs", "Vi/Vim Editor", "Package Management (YUM/DNF)", "Process Management", "Service Management (systemd)", "Disk Partitioning & LVM", "File Systems & Mounting", "Networking Configuration", "Firewalld & Security", "SELinux Administration", "Shell Scripting Basics", "Cron Jobs & Automation", "Troubleshooting & Recovery", "RHCSA Exam Preparation"],
+};
+
 const benefitsData = [
   { title: "Recognized Certification", icon: Award, color: "from-amber-500/20 to-amber-500/5", points: ["Gain credentials that boost your career prospects", "Earn industry-recognized certifications", "Showcase verified skills to employers"] },
   { title: "Practical Training", icon: Wrench, color: "from-blue-500/20 to-blue-500/5", points: ["Learn through hands-on lab environments", "Work on real-world scenarios", "Master industry standard tools"] },
@@ -263,11 +326,28 @@ export default function CourseDetailPage() {
   if (!course) return <PublicLayout><div className="flex items-center justify-center min-h-[60vh]"><p className="text-muted-foreground">Course not found</p></div></PublicLayout>;
 
   const rawModules = course.modules;
-  const modules: string[] = Array.isArray(rawModules) ? rawModules.map(String) : [];
-  const tools = courseTools[course.slug] || ["Kali Linux", "Wireshark", "Metasploit", "Nmap", "Burp Suite"];
-  const fallbackProjects = courseProjects[course.slug] || courseProjects["cyber-security"];
-  const fallbackStories = courseStories[course.slug] || courseStories["cyber-security"];
-  const fallbackTrainers = courseTrainers[course.slug] || courseTrainers["cyber-security"];
+  const modulesFromDb: string[] = Array.isArray(rawModules) ? rawModules.map(String) : [];
+  const modules = modulesFromDb.length > 0 ? modulesFromDb : (defaultCurriculum[course.slug] || []);
+  const tools = courseTools[course.slug] || ["Industry Tools", "Virtual Labs", "Online IDE", "Version Control", "Documentation"];
+  const fallbackProjects = courseProjects[course.slug] || [
+    { title: "Capstone Project", desc: "Apply all learned concepts in a comprehensive final project" },
+    { title: "Industry Case Study", desc: "Analyze and solve real industry problems using course concepts" },
+    { title: "Portfolio Project", desc: "Build a professional portfolio piece to showcase your skills" },
+    { title: "Team Collaboration", desc: "Work in teams to deliver a multi-module project" },
+    { title: "Research Assignment", desc: "Research and present on emerging trends in the field" },
+    { title: "Practical Assessment", desc: "Demonstrate practical skills in a timed assessment environment" },
+  ];
+  const fallbackStories = courseStories[course.slug] || [
+    { name: "Student A", role: "Successfully Placed", quote: "The hands-on training at HACKADEMIC gave me the confidence to excel in my career." },
+    { name: "Student B", role: "Career Changer", quote: "Excellent mentorship and practical projects helped me transition into this field seamlessly." },
+    { name: "Student C", role: "Skill Enhancement", quote: "The curriculum was perfectly aligned with industry requirements. Highly recommended!" },
+  ];
+  const fallbackTrainers = courseTrainers[course.slug] || [
+    { name: "Industry Expert", title: "Senior Trainer", exp: "8+" },
+    { name: "Certified Professional", title: "Lead Instructor", exp: "10+" },
+    { name: "Subject Matter Expert", title: "Technical Mentor", exp: "7+" },
+  ];
+  const activeBenefits = courseBenefitsMap[course.slug] || benefitsData;
 
   const courseHighlights = [
     { icon: Briefcase, value: "100%", label: "Job Assistance" },
@@ -375,7 +455,7 @@ export default function CourseDetailPage() {
         <div className="relative z-10">
           <SectionTitle subtitle="Why Join" title="Benefits of this Program" description="What makes HACKADEMIC's training stand out from the rest" />
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {benefitsData.map((benefit) => (
+            {activeBenefits.map((benefit) => (
               <motion.div key={benefit.title} variants={itemVariants} whileHover={{ y: -10, scale: 1.02 }} className="bg-card rounded-2xl border border-border p-7 hover:shadow-xl hover:border-primary/30 transition-all group">
                 <motion.div className={`w-14 h-14 bg-gradient-to-br ${benefit.color} rounded-xl flex items-center justify-center mb-5`} whileHover={{ rotate: 15, scale: 1.1 }}>
                   <benefit.icon className="h-7 w-7 text-primary" />
